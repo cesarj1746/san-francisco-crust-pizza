@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest
+playwright
+pyinstaller
+python-docx
+python-pptx
