@@ -19,7 +19,7 @@ def _mostrar(resp) -> None:
 def render() -> None:
     ctx = contexto()
     cabecera("🧭 ASISTENTE INTELIGENTE DE DECISIONES COMERCIALES", ctx)
-    st.markdown(f"<span class='sf-badge'>⚙️ {NOMBRE}</span><span class='sf-badge'>Sin internet</span>"
+    st.markdown(f"<span class='sf-badge'>⚙️ {NOMBRE}</span><span class='sf-badge'>Sin servicios externos</span>"
                 "<span class='sf-badge'>Sin modelos generativos</span><span class='sf-badge'>Usa los filtros activos</span>",
                 unsafe_allow_html=True)
     ui.nota(DESCRIPCION + " Las recomendaciones deben ser analizadas críticamente por el equipo antes de "

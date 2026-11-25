@@ -1,51 +1,37 @@
-# Publicación en internet (Streamlit Community Cloud, plan gratuito)
+# Publicación en Streamlit Community Cloud (plan gratuito)
 
-La versión local no necesita internet. La publicación pública es una copia de la misma aplicación, desplegada desde GitHub. El profesor exige el enlace público para la evaluación.
+**Aplicación publicada:** https://sf-crust-pizza-abv.streamlit.app/
+**Repositorio:** https://github.com/cesarj1746/san-francisco-crust-pizza
 
-## Requisitos (todos gratuitos)
+## Cómo se publicó
 
-- Una cuenta de GitHub y un repositorio **público** con este código fuente.
-- Una cuenta de Streamlit Community Cloud (share.streamlit.io). Se inicia sesión con la misma cuenta de GitHub.
+1. **Repositorio:** se creó en GitHub un repositorio público vacío, `cesarj1746/san-francisco-crust-pizza`.
+2. **Código:** se subió a la rama `main` el código fuente, con `app.py`, `requirements.txt`, `sfcp/`, `vistas/`, `datos_iniciales/` y `.streamlit/`.
+3. **Inicio de sesión:** en share.streamlit.io se inició sesión con la cuenta de GitHub.
+4. **Despliegue:** se eligió «Create app» → «Deploy a public app from GitHub», con el repositorio `cesarj1746/san-francisco-crust-pizza`, la rama `main` y el archivo `app.py`.
+5. **Instalación:** Streamlit instaló las dependencias de `requirements.txt` y publicó la aplicación en `https://sf-crust-pizza-abv.streamlit.app/`.
 
-## Pasos
+## Cómo se actualiza
 
-1. **Subir el código al repositorio.** Suba el contenido de `04_CODIGO_FUENTE` a la raíz del repositorio: `app.py`, `requirements.txt`, `sfcp/`, `vistas/`, `datos_iniciales/`, `.streamlit/`, `recursos/`.
-2. **Abrir el asistente de despliegue.** Entre en share.streamlit.io, elija «Create app» y luego «Deploy a public app from GitHub».
-3. **Configurar la app.** Elija:
-   - el repositorio;
-   - la rama `main`;
-   - el archivo principal `app.py`;
-   - una URL personalizada si lo desea, por ejemplo `sf-crust-pizza`.
-4. **Elegir la versión de Python.** En «Advanced settings» seleccione Python 3.13 o 3.12. No hacen falta secretos.
-5. **Desplegar.** Pulse «Deploy». Al terminar obtendrá un enlace `https://<nombre>.streamlit.app`, que es el **enlace público** para la entrega.
+- **Cambios de código:** cada cambio que se sube a la rama `main` del repositorio vuelve a publicar la aplicación automáticamente.
+- **Gestión:** la aplicación se administra desde share.streamlit.io, con el botón «Manage app» o el menú «⋮». Desde ahí se puede reiniciar (Reboot) y ver los registros.
 
-## Diferencias entre la versión local y la versión pública
+## Dónde se guardan las bases
 
-| Aspecto | Local (Windows) | Pública (Streamlit Cloud) |
-|---|---|---|
-| Carpeta de datos | `C:\SanFranciscoCrustPizza\` o la que elija el usuario | `almacenamiento/` dentro del servidor (detección automática) |
-| Persistencia de cargas | Permanente | **Temporal:** las cargas y respaldos se pierden cuando el servidor se reinicia o se reactiva tras un período sin uso |
-| Bases iniciales | `datos_iniciales/` | `datos_iniciales/` del repositorio |
-| Dirección | `http://localhost:8501` (solo en esa PC) | `https://<nombre>.streamlit.app` (accesible por cualquier persona) |
-| Identificación del equipo | `config/equipo.json` | Debe volver a llenarse tras un reinicio, o guardarse en `datos_iniciales/` (ver abajo) |
+| Acción | Efecto |
+|---|---|
+| Cargar una base en «Administración de bases» | Se aplica de inmediato a todos los indicadores y crea un respaldo. Se conserva mientras el servidor esté activo |
+| El servidor se reinicia o se reactiva tras días sin uso | La aplicación vuelve a las bases de `datos_iniciales/` del repositorio |
+| Subir un archivo a `datos_iniciales/` en GitHub con el mismo nombre (`ventas.xlsx`, `clientes.xlsx` o `productos.xlsx`) | Cambio permanente: Streamlit vuelve a publicar la aplicación con esa base |
 
-`localhost` **no es un enlace público**: solo funciona en la computadora donde se ejecuta la app.
+**Para fijar la identificación del equipo** en la versión publicada, se puede subir `datos_iniciales/equipo.json` con este formato:
 
-## Cómo dejar fijos los datos en la versión pública
+```json
+{"numero_equipo": "5", "integrantes": ["Nombre 1", "Nombre 2"], "programa": "Maestría en Dirección Comercial y Ventas",
+ "asignatura": "Sistemas de Información para la Toma de Decisiones Comerciales", "profesor": "", "universidad": "UNIR", "fecha_entrega": ""}
+```
 
-- **Bases de datos:** para cambiar las bases de forma permanente, reemplace los archivos de `datos_iniciales/` en GitHub con los mismos nombres (`ventas.xlsx`, `clientes.xlsx`, `productos.xlsx`). Streamlit Cloud vuelve a desplegar la app automáticamente.
-- **Identificación del equipo:** se puede publicar de forma permanente añadiendo el archivo `datos_iniciales/equipo.json`, con el mismo formato que `config/equipo.json`. El código lo copia al primer arranque.
+## Plan gratuito
 
-## Migración futura a almacenamiento persistente
-
-El acceso a los archivos está concentrado en `sfcp/config.py` (rutas) y `sfcp/storage.py` (lectura, escritura, respaldos e historial). Para usar almacenamiento persistente en la nube, por ejemplo Google Drive, S3 o una base de datos, se reemplazan solo esas funciones (`guardar_archivo`, `respaldar`, `restaurar`, `listar_respaldos`, `registrar`). El dashboard, los cálculos y el asistente no cambian.
-
-Componentes que requerirán configuración adicional en esa etapa:
-
-1. Credenciales del servicio de almacenamiento, guardadas en `st.secrets`, nunca en el código.
-2. Autenticación de usuarios, si la información no debe ser pública. El plan gratuito permite apps privadas limitadas.
-3. Revisión del tamaño de los archivos. El límite de carga actual es de 200 MB.
-
-## Prueba realizada antes de publicar
-
-La aplicación se ejecutó en modo servidor (Linux, como Streamlit Cloud) con `SFCP_CLOUD=1`. En ese modo creó su almacenamiento dentro de la carpeta del código y mostró el aviso de almacenamiento temporal.
+- La aplicación es pública: se abre con el enlace, sin pedir inicio de sesión.
+- Si pasa varios días sin visitas, se suspende. Al abrirla aparece un botón para reactivarla («Yes, get this app back up!» o «Wake up»), y vuelve en uno o dos minutos. Conviene abrirla el día anterior a la evaluación.

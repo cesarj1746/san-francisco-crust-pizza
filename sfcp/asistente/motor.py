@@ -16,8 +16,8 @@ import pandas as pd
 
 from .. import kpis
 
-NOMBRE = "Motor local de análisis y recomendaciones comerciales"
-DESCRIPCION = ("Funciona sin internet y sin modelos generativos: interpreta la pregunta por palabras clave, "
+NOMBRE = "Motor de análisis y recomendaciones comerciales basado en reglas"
+DESCRIPCION = ("Funciona dentro de la aplicación, sin servicios externos ni modelos generativos: interpreta la pregunta por palabras clave, "
                "calcula indicadores reales con los filtros activos y aplica reglas de negocio documentadas.")
 
 

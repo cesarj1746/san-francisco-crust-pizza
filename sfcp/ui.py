@@ -348,8 +348,9 @@ def sin_datos(df: pd.DataFrame) -> bool:
 
 def aviso_nube() -> None:
     if is_cloud():
-        nota("☁️ Versión pública de demostración: los archivos que cargue se conservan solo mientras "
-             "el servidor esté activo. Para uso permanente utilice la versión local.", "warn")
+        nota("☁️ Versión web: los archivos que cargue aquí se aplican de inmediato a todos los indicadores, "
+             "pero se conservan mientras el servidor esté activo. Para que una base quede de forma permanente, "
+             "súbala con el mismo nombre a la carpeta <b>datos_iniciales</b> del repositorio de GitHub.", "warn")
 
 
 _ = (np, px)
